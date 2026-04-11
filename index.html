@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Book of Answers</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Theme Tokens ─────────────────────────────── */
+    :root {
+      --bg:           #f7f3eb;
+      --surface:      #ede7d4;
+      --card-bg:      #fdfaf3;
+      --gold:         #9a7b2e;
+      --gold-light:   #c4972f;
+      --text:         #1c1a15;
+      --text-muted:   #7a7060;
+      --text-faint:   #b0a898;
+      --border:       rgba(154,123,46,0.22);
+      --shadow:       0 24px 64px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.06);
+      --pill-bg:      #eae3d0;
+      --pill-active:  #9a7b2e;
+      --pill-text:    #fdfaf3;
+      --btn-bg:       #9a7b2e;
+      --btn-text:     #fdfaf3;
+    }
+
+    [data-theme="dark"] {
+      --bg:           #09090d;
+      --surface:      #111117;
+      --card-bg:      #16161f;
+      --gold:         #d4af37;
+      --gold-light:   #edd96a;
+      --text:         #f0e8d4;
+      --text-muted:   #88806e;
+      --text-faint:   #524c42;
+      --border:       rgba(212,175,55,0.18);
+      --shadow:       0 24px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(212,175,55,0.08);
+      --pill-bg:      #1c1c28;
+      --pill-active:  #d4af37;
+      --pill-text:    #09090d;
+      --btn-bg:       #d4af37;
+      --btn-text:     #09090d;
+    }
+
+    /* ── Reset ────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── Body ─────────────────────────────────────── */
+    body {
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 28px 20px 60px;
+      transition: background 0.5s ease, color 0.5s ease;
+    }
+
+    [data-theme="dark"] body {
+      background: radial-gradient(ellipse at 50% 0%, #16162a 0%, #09090d 65%);
+    }
+
+    /* ── Top Bar ──────────────────────────────────── */
+    .top-bar {
+      width: 100%;
+      max-width: 500px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 44px;
+    }
+
+    .top-btn {
+      background: var(--pill-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 7px 16px;
+      font-size: 12px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: color 0.25s, border-color 0.25s, background 0.25s;
+      user-select: none;
+    }
+
+    .top-btn:hover {
+      color: var(--gold);
+      border-color: var(--gold);
+    }
+
+    /* ── Main Container ───────────────────────────── */
+    .container {
+      width: 100%;
+      max-width: 500px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* ── Book Tabs ────────────────────────────────── */
+    .book-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 52px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .book-tab {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 9px 20px;
+      font-size: 12.5px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      user-select: none;
+    }
+
+    .book-tab.active {
+      background: var(--pill-active);
+      border-color: var(--pill-active);
+      color: var(--pill-text);
+      font-weight: 600;
+    }
+
+    .book-tab:hover:not(.active) {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    /* ── Book Title ───────────────────────────────── */
+    .book-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 36px;
+      text-align: center;
+      opacity: 1;
+      transition: opacity 0.3s ease;
+    }
+
+    /* ── Card Scene ───────────────────────────────── */
+    .card-scene {
+      perspective: 1400px;
+      width: 300px;
+      height: 400px;
+      margin-bottom: 44px;
+      cursor: pointer;
+    }
+
+    .card {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.9s cubic-bezier(0.45, 0.05, 0.15, 1.0);
+    }
+
+    .card.flipped {
+      transform: rotateY(180deg);
+    }
+
+    .card-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: 14px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 44px 36px;
+      transition: background 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
+    }
+
+    .card-back {
+      transform: rotateY(180deg);
+    }
+
+    /* subtle hover lift */
+    .card-scene:hover .card:not(.flipped) .card-front {
+      box-shadow: var(--shadow), 0 0 0 1px var(--border);
+    }
+
+    /* ── Card Front ───────────────────────────────── */
+    .ornament {
+      font-size: 28px;
+      color: var(--gold);
+      margin-bottom: 20px;
+      line-height: 1;
+      user-select: none;
+    }
+
+    .divider {
+      width: 36px;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.45;
+      margin: 14px auto;
+      flex-shrink: 0;
+    }
+
+    .card-prompt {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 15px;
+      line-height: 1.75;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    .card-hint {
+      margin-top: 20px;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+    }
+
+    /* ── Card Back ────────────────────────────────── */
+    .answer-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 21px;
+      font-weight: 600;
+      line-height: 1.55;
+      text-align: center;
+      color: var(--text);
+      transition: color 0.5s ease;
+    }
+
+    [data-theme="dark"] .answer-text {
+      color: var(--gold);
+    }
+
+    /* ── Ask Button ───────────────────────────────── */
+    .ask-btn {
+      background: var(--btn-bg);
+      color: var(--btn-text);
+      border: none;
+      border-radius: 40px;
+      padding: 15px 44px;
+      font-size: 12.5px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.5s ease, color 0.5s ease;
+      user-select: none;
+    }
+
+    .ask-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 28px rgba(154,123,46,0.28);
+    }
+
+    [data-theme="dark"] .ask-btn:hover {
+      box-shadow: 0 10px 28px rgba(212,175,55,0.22);
+    }
+
+    .ask-btn:active {
+      transform: translateY(-1px);
+    }
+
+    /* ── Footer ───────────────────────────────────── */
+    .footer {
+      margin-top: 64px;
+      font-size: 10.5px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      text-align: center;
+    }
+
+    /* ── Responsive ───────────────────────────────── */
+    @media (max-width: 380px) {
+      .card-scene { width: 270px; height: 360px; }
+      .book-tab { padding: 8px 14px; font-size: 11.5px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Top Controls -->
+  <div class="top-bar">
+    <button class="top-btn" id="lang-toggle">中文</button>
+    <button class="top-btn" id="theme-toggle">☽ Night</button>
+  </div>
+
+  <!-- Main -->
+  <div class="container">
+
+    <!-- Book Selector -->
+    <div class="book-tabs">
+      <button class="book-tab active" data-book="classic"       id="tab-classic">Classic</button>
+      <button class="book-tab"        data-book="audit"         id="tab-audit">Audit Life</button>
+      <button class="book-tab"        data-book="relationship"  id="tab-relationship">Heart</button>
+    </div>
+
+    <!-- Title -->
+    <div class="book-title" id="book-title">The Book of Answers</div>
+
+    <!-- Card -->
+    <div class="card-scene" id="card-scene">
+      <div class="card" id="card">
+
+        <!-- Front Face -->
+        <div class="card-face card-front">
+          <div class="ornament" id="card-ornament">✦</div>
+          <div class="divider"></div>
+          <div class="card-prompt" id="card-prompt">Hold your question in mind, then reveal your answer.</div>
+          <div class="divider"></div>
+          <div class="card-hint" id="card-hint">tap to reveal</div>
+        </div>
+
+        <!-- Back Face -->
+        <div class="card-face card-back">
+          <div class="divider"></div>
+          <div class="answer-text" id="answer-text"></div>
+          <div class="divider"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Button -->
+    <button class="ask-btn" id="ask-btn">Ask the Book</button>
+
+  </div>
+
+  <!-- Footer -->
+  <div class="footer" id="footer">The Book of Answers</div>
+
+
+  <script>
+  // ── Data ───────────────────────────────────────────────────────────────────
+  const BOOKS = {
+    classic: {
+      en: {
+        name:        "The Book of Answers",
+        prompt:      "Hold your question in mind, then reveal your answer.",
+        hint:        "tap to reveal",
+        askBtn:      "Ask the Book",
+        againBtn:    "Ask Again",
+        ornament:    "✦",
+        answers: [
+          "The answer lies within you",
+          "Not in your favor",
+          "All signs point to yes",
+          "This is not the time",
+          "Trust your instincts",
+          "Be patient — the answer will come",
+          "Proceed with caution",
+          "Without a doubt",
+          "Reconsider your options",
+          "The stars align for you",
+          "Let it go",
+          "Now is the moment",
+          "Silence speaks louder than words",
+          "A change is coming",
+          "Look within yourself",
+          "The path is clear",
+          "Doubt no further",
+          "This too shall pass",
+          "Take the leap",
+          "Wait and see",
+          "The answer is no",
+          "Your instincts are correct",
+          "Seek counsel from a trusted soul",
+          "The universe is listening",
+          "Don't overthink it",
+          "Something better awaits",
+          "Yes, but proceed carefully",
+          "The timing is not right",
+          "Release your attachment",
+          "This is your moment",
+          "The answer will reveal itself in time",
+          "Embrace the unknown",
+          "Begin again",
+          "Yield to what must be",
+          "The winds are in your favor",
+          "Resist temptation",
+          "Focus on what matters most",
+          "Close one door to open another",
+          "The journey is the destination",
+          "Speak your truth"
+        ]
+      },
+      zh: {
+        name:        "答案之书",
+        prompt:      "心怀你的问题，然后揭晓你的答案。",
+        hint:        "点击揭晓",
+        askBtn:      "问问书",
+        againBtn:    "再问一次",
+        ornament:    "✦",
+        answers: [
+          "答案就在你心中",
+          "形势对你不利",
+          "一切迹象指向是",
+          "时机未到",
+          "相信你的直觉",
+          "耐心等待，答案终会来临",
+          "谨慎前行",
+          "毫无疑问",
+          "重新考虑你的选择",
+          "星辰为你指引",
+          "放手吧",
+          "此刻正是时机",
+          "沉默胜于言语",
+          "改变即将到来",
+          "向内寻求答案",
+          "道路已然清晰",
+          "不要再怀疑了",
+          "这一切终将过去",
+          "勇敢迈出那一步",
+          "静观其变",
+          "答案是否定的",
+          "你的直觉是正确的",
+          "向信任的人寻求建议",
+          "宇宙正在聆听",
+          "不要想太多",
+          "更好的事情在等待你",
+          "是的，但需谨慎",
+          "时机尚未成熟",
+          "放下执念",
+          "属于你的时刻已到来",
+          "答案将在适当的时候显现",
+          "拥抱未知",
+          "重新开始",
+          "顺应必然",
+          "风向对你有利",
+          "抵制诱惑",
+          "专注于最重要的事",
+          "关上一扇门以开启另一扇",
+          "旅程即是目的地",
+          "说出你的真心话"
+        ]
+      }
+    },
+
+    audit: {
+      en: {
+        name:        "Audit Life",
+        prompt:      "Think of your audit dilemma, then face the evidence.",
+        hint:        "tap to consult",
+        askBtn:      "Consult the Files",
+        againBtn:    "Re-sample",
+        ornament:    "§",
+        answers: [
+          "Insufficient documentation — rejected",
+          "Scope creep detected. Abort immediately.",
+          "Consult your senior manager first",
+          "Mark it immaterial and move on",
+          "The audit committee will decide",
+          "This finding is material",
+          "Management has overridden the control",
+          "Request additional supporting evidence",
+          "Not within the defined scope",
+          "A compensating control exists (allegedly)",
+          "The deadline has been extended... again",
+          "Escalate immediately",
+          "That's a control gap, not your problem",
+          "Working as intended (per management)",
+          "The walkthrough tells a very different story",
+          "Recalculate, reconcile, repeat",
+          "Your sample size is insufficient",
+          "Exception noted. Document and move on.",
+          "This requires a second review",
+          "Flag for follow-up next quarter",
+          "Management has accepted the risk. Move on.",
+          "It's immaterial. Sign and move on.",
+          "Throw it in the parking lot",
+          "Just ask IT — they'll know",
+          "Remediation expected... next fiscal year",
+          "You're out of scope again",
+          "The spreadsheet never lies",
+          "Document everything. Trust no one.",
+          "That's a significant deficiency",
+          "Close the books first, ask questions later",
+          "The PBC list just grew again",
+          "Reperformance required",
+          "No exceptions noted (a rare miracle)",
+          "The evidence file is incomplete",
+          "Three-way match failed",
+          "Management representation received (finally)",
+          "Your finding will be disputed by management",
+          "Send the confirm and pray",
+          "The SOX deadline waits for no one",
+          "Coffee first. Audit second."
+        ]
+      },
+      zh: {
+        name:        "审计人生",
+        prompt:      "想好你的审计难题，然后面对证据。",
+        hint:        "点击查阅",
+        askBtn:      "查阅档案",
+        againBtn:    "重新抽样",
+        ornament:    "§",
+        answers: [
+          "证据不足——驳回",
+          "发现范围蔓延，立即停止",
+          "先咨询你的上级经理",
+          "重要性水平以下，忽略，继续",
+          "由审计委员会决定",
+          "此发现具有重大影响",
+          "管理层已凌驾于控制之上",
+          "请提供额外的支持性证据",
+          "不在已定义的范围内",
+          "据称存在替代性控制",
+          "截止日期又延期了",
+          "立即上报",
+          "这是一个控制漏洞，但不是你的问题",
+          "据管理层称，系统按预期运行",
+          "穿行测试显示了截然不同的故事",
+          "重新计算，重新核对，再来一遍",
+          "你的样本量不足",
+          "记录例外，继续前进",
+          "需要二次复核",
+          "标记为下季度跟进",
+          "管理层已接受该风险，继续",
+          "金额不重要。签字走人。",
+          "先放到停车场（议题搁置）",
+          "问IT吧——他们会知道的",
+          "整改预计在……下个财年",
+          "你又超范围了",
+          "电子表格不会说谎",
+          "记录一切。不信任任何人。",
+          "这是一个重大缺陷",
+          "先关账，问题以后再说",
+          "PBC清单又变长了",
+          "需要重新执行测试",
+          "未发现例外（罕见奇迹）",
+          "证据文件不完整",
+          "三方匹配失败",
+          "管理层声明书（终于）收到了",
+          "你的发现将被管理层质疑",
+          "发出询证函，然后祈祷吧",
+          "SOX截止日期不等人",
+          "先喝咖啡，审计其次"
+        ]
+      }
+    },
+
+    relationship: {
+      en: {
+        name:        "The Heart Speaks",
+        prompt:      "Hold your heart's question gently, then listen.",
+        hint:        "tap to listen",
+        askBtn:      "Ask Your Heart",
+        againBtn:    "Ask Again",
+        ornament:    "♡",
+        answers: [
+          "They are thinking of you right now",
+          "This chapter is coming to a close",
+          "A new connection is on its way",
+          "Give it more time",
+          "Your heart already knows the answer",
+          "Communication is the only way forward",
+          "Let them come to you",
+          "This is worth fighting for",
+          "Walk away with grace",
+          "Love yourself first",
+          "The timing isn't right yet",
+          "They feel exactly the same way",
+          "Distance will bring you clarity",
+          "Your feelings are completely valid",
+          "This person is not your person",
+          "Be vulnerable — it's safe",
+          "Stop waiting — reach out now",
+          "A reunion is possible",
+          "It's time to set a boundary",
+          "The connection between you is real",
+          "You deserve so much better",
+          "Forgive, but remember the lesson",
+          "Take the space you need",
+          "Trust is everything",
+          "Your love will be returned",
+          "This is a lesson, not a destination",
+          "Reach out — they want to hear from you",
+          "Give them one more chance",
+          "You are enough, exactly as you are",
+          "The answer has always been love",
+          "Stop analyzing and just feel",
+          "They are not coming back",
+          "Your next great love is closer than you think",
+          "Protect your energy",
+          "Say what you've been afraid to say",
+          "This relationship needs space to breathe",
+          "You cannot change another person",
+          "The red flags were always there",
+          "Your intuition about them is right",
+          "End it with kindness"
+        ]
+      },
+      zh: {
+        name:        "心语",
+        prompt:      "轻轻怀抱你内心的疑问，然后聆听。",
+        hint:        "点击聆听",
+        askBtn:      "问问内心",
+        againBtn:    "再问一次",
+        ornament:    "♡",
+        answers: [
+          "他们此刻正在想着你",
+          "这一章即将画上句号",
+          "一段新的缘分正在到来",
+          "再给它一些时间",
+          "你的心早已知道答案",
+          "沟通是唯一的出路",
+          "让他们主动来找你",
+          "这段感情值得为之努力",
+          "带着优雅离开",
+          "先爱自己",
+          "时机还没到",
+          "他们的感受和你一样",
+          "距离会带给你清醒",
+          "你的感受完全合理",
+          "这个人不是你命中注定的那个人",
+          "袒露真心——这是安全的",
+          "别再等了——现在就联系",
+          "重聚是有可能的",
+          "是时候划清界限了",
+          "你们之间的连接是真实的",
+          "你值得更好的",
+          "原谅，但记住这个教训",
+          "给自己需要的空间",
+          "信任是一切的基础",
+          "你的爱会得到回应",
+          "这是一课，而非终点",
+          "联系他们——他们想收到你的消息",
+          "再给他们一次机会",
+          "你就是足够好，就是现在这样",
+          "答案从来都是爱",
+          "别再分析了，感受就好",
+          "他们不会回来了",
+          "你的下一段伟大的爱比你想象的更近",
+          "保护你的能量",
+          "说出那句你一直不敢说的话",
+          "这段关系需要喘息的空间",
+          "你无法改变另一个人",
+          "那些红旗一直都在",
+          "你对他们的直觉是对的",
+          "以善意结束它"
+        ]
+      }
+    }
+  };
+
+  // ── State ──────────────────────────────────────────────────────────────────
+  const state = {
+    theme:    "light",
+    lang:     "en",
+    book:     "classic",
+    flipped:  false,
+    lastIdx:  -1
+  };
+
+  // ── Elements ───────────────────────────────────────────────────────────────
+  const $html        = document.documentElement;
+  const $card        = document.getElementById("card");
+  const $cardScene   = document.getElementById("card-scene");
+  const $bookTitle   = document.getElementById("book-title");
+  const $ornament    = document.getElementById("card-ornament");
+  const $prompt      = document.getElementById("card-prompt");
+  const $hint        = document.getElementById("card-hint");
+  const $answer      = document.getElementById("answer-text");
+  const $askBtn      = document.getElementById("ask-btn");
+  const $langToggle  = document.getElementById("lang-toggle");
+  const $themeToggle = document.getElementById("theme-toggle");
+  const $footer      = document.getElementById("footer");
+  const $tabs        = document.querySelectorAll(".book-tab");
+  const $tabClassic  = document.getElementById("tab-classic");
+  const $tabAudit    = document.getElementById("tab-audit");
+  const $tabRel      = document.getElementById("tab-relationship");
+
+  // ── Helpers ────────────────────────────────────────────────────────────────
+  function currentData() {
+    return BOOKS[state.book][state.lang];
+  }
+
+  function randomAnswer() {
+    const list = currentData().answers;
+    let idx;
+    do { idx = Math.floor(Math.random() * list.length); }
+    while (idx === state.lastIdx && list.length > 1);
+    state.lastIdx = idx;
+    return list[idx];
+  }
+
+  // ── Render UI ──────────────────────────────────────────────────────────────
+  function render(fadeTitle = false) {
+    const d = currentData();
+
+    // Title
+    if (fadeTitle) {
+      $bookTitle.style.opacity = "0";
+      setTimeout(() => {
+        $bookTitle.textContent = d.name;
+        $bookTitle.style.opacity = "1";
+      }, 280);
+    } else {
+      $bookTitle.textContent = d.name;
+    }
+
+    // Card front
+    $ornament.textContent = d.ornament;
+    $prompt.textContent   = d.prompt;
+    $hint.textContent     = d.hint;
+
+    // Button
+    $askBtn.textContent = state.flipped ? d.againBtn : d.askBtn;
+
+    // If answer is visible, re-render it in new language (same index)
+    if (state.flipped && state.lastIdx >= 0) {
+      $answer.textContent = BOOKS[state.book][state.lang].answers[state.lastIdx];
+    }
+
+    // Tabs
+    $tabClassic.textContent = state.lang === "en" ? "Classic"    : "经典";
+    $tabAudit.textContent   = state.lang === "en" ? "Audit Life" : "审计人生";
+    $tabRel.textContent     = state.lang === "en" ? "Heart"      : "心语";
+
+    // Toggles
+    $langToggle.textContent  = state.lang   === "en"    ? "中文"    : "English";
+    $themeToggle.textContent = state.theme  === "light"
+      ? (state.lang === "en" ? "☽ Night" : "☽ 夜间")
+      : (state.lang === "en" ? "☀ Day"   : "☀ 日间");
+
+    // Footer
+    $footer.textContent = d.name;
+
+    // html lang attribute
+    $html.lang = state.lang === "en" ? "en" : "zh-Hans";
+  }
+
+  // ── Flip Logic ─────────────────────────────────────────────────────────────
+  function flipToAnswer() {
+    $answer.textContent = randomAnswer();
+    state.flipped = true;
+    $card.classList.add("flipped");
+    $askBtn.textContent = currentData().againBtn;
+  }
+
+  function flipToFront() {
+    state.flipped = false;
+    $card.classList.remove("flipped");
+    $askBtn.textContent = currentData().askBtn;
+  }
+
+  function handleAsk() {
+    state.flipped ? flipToFront() : flipToAnswer();
+  }
+
+  // ── Events ─────────────────────────────────────────────────────────────────
+  $cardScene.addEventListener("click", handleAsk);
+  $askBtn.addEventListener("click", (e) => { e.stopPropagation(); handleAsk(); });
+
+  $tabs.forEach(tab => {
+    tab.addEventListener("click", () => {
+      const book = tab.dataset.book;
+      if (book === state.book) return;
+      state.book    = book;
+      state.lastIdx = -1;
+      if (state.flipped) flipToFront();
+      $tabs.forEach(t => t.classList.remove("active"));
+      tab.classList.add("active");
+      render(true);
+    });
+  });
+
+  $langToggle.addEventListener("click", () => {
+    state.lang = state.lang === "en" ? "zh" : "en";
+    render(false);
+  });
+
+  $themeToggle.addEventListener("click", () => {
+    state.theme = state.theme === "light" ? "dark" : "light";
+    $html.setAttribute("data-theme", state.theme);
+    render(false);
+  });
+
+  // ── Init ───────────────────────────────────────────────────────────────────
+  render(false);
+  </script>
+
+</body>
+</html>
