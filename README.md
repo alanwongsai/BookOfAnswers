@@ -10,7 +10,7 @@ A minimal, elegant web app inspired by *The Book of Answers* — ask a question,
 
 You hold a question in your mind, tap the card, and get a random answer — just like the classic book. No AI, no algorithms trying to be clever. Just a flip, and a line that might be exactly what you needed to hear.
 
-Three books are included, each with 40 answers in both **English and Simplified Chinese**:
+Three books are included, each with 300 answers in both **English and Simplified Chinese**:
 
 | Book | Theme | Vibe |
 |------|-------|-------|
@@ -44,8 +44,12 @@ Your app will be live at `https://yourusername.github.io/repo-name` within a min
 
 ```
 /
-└── index.html    ← the entire app, self-contained
-└── README.md     ← this file
+├── index.html     ← the entire app, self-contained
+├── manifest.json  ← PWA metadata
+├── sw.js          ← offline cache service worker
+├── icon-192.png   ← app icon
+├── icon-512.png   ← app icon
+└── README.md      ← this file
 ```
 
 No `node_modules`. No `package.json`. No build process. Just open the file and it works.
