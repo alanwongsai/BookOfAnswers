@@ -1,7 +1,7 @@
 // Book of Answers — Service Worker
 // Caches everything for offline use
 
-const CACHE = 'book-of-answers-v1';
+const CACHE = 'book-of-answers-v3';
 const ASSETS = [
   './',
   './index.html',
@@ -28,8 +28,21 @@ self.addEventListener('activate', event => {
   self.clients.claim();
 });
 
-// Fetch: serve from cache, fall back to network
+// Fetch: navigation uses network first so design updates reach phones quickly.
 self.addEventListener('fetch', event => {
+  if (event.request.mode === 'navigate') {
+    event.respondWith(
+      fetch(event.request)
+        .then(response => {
+          const copy = response.clone();
+          caches.open(CACHE).then(cache => cache.put('./index.html', copy));
+          return response;
+        })
+        .catch(() => caches.match('./index.html'))
+    );
+    return;
+  }
+
   event.respondWith(
     caches.match(event.request).then(cached => cached || fetch(event.request))
   );

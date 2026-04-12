@@ -13,7 +13,7 @@
   <link rel="apple-touch-icon" href="./icon-192.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
     /* ── Theme Tokens ─────────────────────────────── */
     :root {
@@ -23,6 +23,7 @@
       --glass:        rgba(255,255,255,0.52);
       --glass-strong: rgba(255,255,255,0.70);
       --card-bg:      rgba(255,255,255,0.62);
+      --sheen:        rgba(255,255,255,0.70);
       --gold:         #8f7228;
       --gold-light:   #d5b24c;
       --text:         #111817;
@@ -45,6 +46,7 @@
       --glass:        rgba(255,255,255,0.08);
       --glass-strong: rgba(255,255,255,0.14);
       --card-bg:      rgba(255,255,255,0.10);
+      --sheen:        rgba(255,255,255,0.20);
       --gold:         #e2c25d;
       --gold-light:   #f3dc82;
       --text:         #f1f6f4;
@@ -73,8 +75,9 @@
       min-height: 100vh;
       min-height: 100svh;
       background:
-        radial-gradient(circle at 18% 6%, var(--bg-aura-1), transparent 34%),
-        radial-gradient(circle at 82% 4%, var(--bg-aura-2), transparent 32%),
+        radial-gradient(circle at 14% 7%, rgba(52, 169, 190, 0.36), transparent 28%),
+        radial-gradient(circle at 84% 12%, rgba(228, 182, 68, 0.30), transparent 30%),
+        radial-gradient(circle at 50% 96%, rgba(226, 101, 131, 0.16), transparent 34%),
         linear-gradient(145deg, var(--bg), #f8fbfb 52%, #e9f2f3);
       color: var(--text);
       font-family: 'Inter', sans-serif;
@@ -87,8 +90,9 @@
 
     [data-theme="dark"] body {
       background:
-        radial-gradient(circle at 16% 5%, var(--bg-aura-1), transparent 35%),
-        radial-gradient(circle at 82% 4%, var(--bg-aura-2), transparent 32%),
+        radial-gradient(circle at 14% 7%, rgba(52, 169, 190, 0.24), transparent 30%),
+        radial-gradient(circle at 84% 12%, rgba(228, 182, 68, 0.20), transparent 30%),
+        radial-gradient(circle at 50% 96%, rgba(226, 101, 131, 0.12), transparent 34%),
         linear-gradient(145deg, #080b0d, #111716 58%, #07090b);
     }
 
@@ -104,7 +108,11 @@
     }
 
     .top-btn {
-      background: var(--pill-bg);
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(145deg, var(--glass-strong), var(--pill-bg)),
+        rgba(255,255,255,0.18);
       border: 1px solid var(--border);
       border-radius: 8px;
       padding: 7px 16px;
@@ -119,6 +127,17 @@
       -webkit-backdrop-filter: blur(18px) saturate(150%);
       transition: color 0.25s, border-color 0.25s, background 0.25s, box-shadow 0.25s;
       user-select: none;
+    }
+
+    .top-btn::before {
+      content: "";
+      position: absolute;
+      inset: 1px 1px auto;
+      height: 48%;
+      border-radius: 7px 7px 4px 4px;
+      background: linear-gradient(180deg, var(--sheen), transparent);
+      opacity: 0.55;
+      pointer-events: none;
     }
 
     .top-btn:hover {
@@ -142,16 +161,27 @@
       margin-bottom: clamp(22px, 5.5svh, 52px);
       flex-wrap: wrap;
       justify-content: center;
+      padding: 7px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: rgba(255,255,255,0.18);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.42), 0 18px 48px rgba(20,45,48,0.10);
+      backdrop-filter: blur(24px) saturate(170%);
+      -webkit-backdrop-filter: blur(24px) saturate(170%);
     }
 
     .book-tab {
-      background: var(--pill-bg);
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(145deg, var(--glass-strong), var(--pill-bg)),
+        rgba(255,255,255,0.20);
       border: 1px solid var(--border);
       border-radius: 8px;
-      padding: 9px 20px;
-      font-size: 13.5px;
-      font-family: 'Playfair Display', serif;
-      font-weight: 600;
+      padding: 8px 18px;
+      font-size: 16px;
+      font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, 'Times New Roman', serif;
+      font-weight: 700;
       letter-spacing: 0;
       color: var(--text-muted);
       cursor: pointer;
@@ -163,10 +193,33 @@
     }
 
     .book-tab.active {
-      background: var(--pill-active);
+      background:
+        linear-gradient(145deg, rgba(255,255,255,0.92), var(--pill-active)),
+        rgba(255,255,255,0.42);
       border-color: rgba(255,255,255,0.78);
       color: var(--pill-text);
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.62), 0 16px 42px rgba(20,45,48,0.13);
+    }
+
+    .book-tab::before {
+      content: "";
+      position: absolute;
+      inset: 1px 1px auto;
+      height: 50%;
+      border-radius: 7px 7px 4px 4px;
+      background: linear-gradient(180deg, var(--sheen), transparent);
+      opacity: 0.62;
+      pointer-events: none;
+    }
+
+    .book-tab::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(120deg, transparent 0 28%, rgba(255,255,255,0.34) 42%, transparent 56% 100%);
+      opacity: 0.38;
+      pointer-events: none;
     }
 
     .book-tab:hover:not(.active) {
@@ -217,10 +270,10 @@
       -webkit-backface-visibility: hidden;
       border-radius: 8px;
       background: var(--card-bg);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(24px) saturate(165%);
-      -webkit-backdrop-filter: blur(24px) saturate(165%);
+      border: 1px solid rgba(255,255,255,0.62);
+      box-shadow: var(--shadow), 0 0 0 1px var(--glass-line);
+      backdrop-filter: blur(34px) saturate(185%);
+      -webkit-backdrop-filter: blur(34px) saturate(185%);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -240,9 +293,10 @@
       border-radius: inherit;
       pointer-events: none;
       background:
-        linear-gradient(135deg, rgba(255,255,255,0.56), transparent 34%),
-        linear-gradient(315deg, transparent 66%, rgba(255,255,255,0.20));
-      opacity: 0.72;
+        linear-gradient(135deg, rgba(255,255,255,0.74), transparent 36%),
+        linear-gradient(315deg, transparent 62%, rgba(255,255,255,0.24)),
+        radial-gradient(circle at 22% 18%, rgba(255,255,255,0.44), transparent 22%);
+      opacity: 0.82;
     }
 
     .card-face > * {
@@ -307,7 +361,11 @@
 
     /* ── Ask Button ───────────────────────────────── */
     .ask-btn {
-      background: var(--btn-bg);
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(145deg, var(--glass-strong), var(--btn-bg)),
+        rgba(255,255,255,0.22);
       color: var(--btn-text);
       border: 1px solid var(--border);
       border-radius: 8px;
@@ -323,6 +381,22 @@
       -webkit-backdrop-filter: blur(18px) saturate(155%);
       transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.5s ease, color 0.5s ease;
       user-select: none;
+    }
+
+    .ask-btn::before {
+      content: "";
+      position: absolute;
+      inset: 1px 1px auto;
+      height: 50%;
+      border-radius: 7px 7px 4px 4px;
+      background: linear-gradient(180deg, var(--sheen), transparent);
+      opacity: 0.58;
+      pointer-events: none;
+    }
+
+    .ask-btn > span {
+      position: relative;
+      z-index: 1;
     }
 
     .ask-btn:hover {
@@ -357,9 +431,10 @@
     @media (max-width: 380px) {
       .card-scene {
         width: clamp(220px, min(84vw, 40svh), 280px);
-        aspect-ratio: 10 / 13.8;
+        aspect-ratio: 10 / 13.2;
       }
-      .book-tab { padding: 8px 14px; font-size: 11.5px; }
+      .book-tabs { gap: 6px; padding: 6px; }
+      .book-tab { padding: 7px 12px; font-size: 14.5px; }
       .ask-btn { width: min(100%, 260px); padding-inline: 24px; }
     }
 
@@ -369,7 +444,7 @@
       .book-title { margin-bottom: 14px; }
       .card-scene {
         width: clamp(190px, min(76vw, 36svh), 250px);
-        aspect-ratio: 10 / 13.4;
+        aspect-ratio: 10 / 12.8;
       }
       .card-hint { margin-top: 14px; }
       .ornament { font-size: 24px; margin-bottom: 14px; }
