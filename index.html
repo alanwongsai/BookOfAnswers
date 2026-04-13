@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark" data-book="classic">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The Book of Answers</title>
   <meta name="description" content="Ask a question. Flip the card. Receive your answer." />
-  <meta name="theme-color" content="#fbf8ef" />
+  <meta name="theme-color" content="#090b12" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Book of Answers" />
@@ -15,211 +15,540 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Libre+Baskerville:wght@400;700&family=Noto+Serif+SC:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
-    /* ── Theme Tokens ─────────────────────────────── */
+    /* Theme Tokens */
     :root {
-      --bg:           #fbf8ef;
-      --surface:      #fffdf6;
-      --surface-soft: #f3ead1;
-      --surface-high: #ebe0bd;
-      --card-bg:      #fffaf0;
-      --paper-line:   rgba(142, 109, 29, 0.07);
-      --gold:         #9b7625;
-      --gold-light:   #dec670;
-      --gold-deep:    #6c4e13;
-      --text:         #241b10;
-      --text-muted:   #6f624e;
-      --text-faint:   #a99d84;
-      --border:       rgba(155, 118, 37, 0.34);
-      --shadow:       0 22px 58px rgba(88, 66, 18, 0.18), 0 4px 14px rgba(88, 66, 18, 0.10);
-      --pill-bg:      #fff8e7;
-      --pill-active:  #9b7625;
-      --pill-text:    #fffaf0;
-      --btn-bg:       #9b7625;
-      --btn-text:     #fffaf0;
-      --spine:        rgba(112, 80, 18, 0.16);
+      color-scheme: dark;
+      --bg: #07090d;
+      --bg-deep: #030406;
+      --bg-soft: #11151a;
+      --surface: rgba(14, 17, 20, 0.72);
+      --surface-strong: rgba(21, 23, 25, 0.9);
+      --surface-hover: rgba(245, 235, 207, 0.08);
+      --card-bg: #111317;
+      --card-bg-2: #191813;
+      --paper-line: rgba(238, 215, 151, 0.035);
+      --text: #f4eedf;
+      --text-muted: #bcb296;
+      --text-faint: #77715f;
+      --accent: #d4b66c;
+      --accent-soft: #f0d994;
+      --accent-deep: #7b6335;
+      --metal: #998a6a;
+      --border: rgba(226, 199, 126, 0.22);
+      --border-strong: rgba(226, 199, 126, 0.42);
+      --aura: rgba(208, 172, 83, 0.22);
+      --aura-2: rgba(79, 102, 115, 0.2);
+      --shadow: 0 34px 110px rgba(0, 0, 0, 0.68), 0 12px 34px rgba(0, 0, 0, 0.42);
+      --button-text: #11100c;
+      --spine: rgba(0, 0, 0, 0.34);
+      --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-display: 'Cinzel', 'Libre Baskerville', Georgia, serif;
+      --font-serif: 'Cormorant Garamond', 'Noto Serif SC', 'Songti SC', serif;
+      --ease-ritual: cubic-bezier(0.2, 0.72, 0.18, 1);
     }
 
-    [data-theme="dark"] {
-      --bg:           #080705;
-      --surface:      #12100b;
-      --surface-soft: #1c1710;
-      --surface-high: #2a2114;
-      --card-bg:      #15110b;
-      --paper-line:   rgba(232, 202, 105, 0.05);
-      --gold:         #d9b94d;
-      --gold-light:   #f0d97a;
-      --gold-deep:    #987427;
-      --text:         #f5ecd0;
-      --text-muted:   #c9b98b;
-      --text-faint:   #776a4e;
-      --border:       rgba(217, 185, 77, 0.36);
-      --shadow:       0 28px 72px rgba(0,0,0,0.60), 0 4px 16px rgba(0,0,0,0.42);
-      --pill-bg:      #1c1710;
-      --pill-active:  #d9b94d;
-      --pill-text:    #15110b;
-      --btn-bg:       #d9b94d;
-      --btn-text:     #15110b;
-      --spine:        rgba(0,0,0,0.34);
+    [data-book="audit"] {
+      --bg: #07090a;
+      --bg-soft: #101416;
+      --card-bg: #111416;
+      --card-bg-2: #181b1b;
+      --text-muted: #b9c0bc;
+      --text-faint: #737d7c;
+      --accent: #c8d0cc;
+      --accent-soft: #eef4ef;
+      --accent-deep: #66706f;
+      --metal: #9aa3a0;
+      --border: rgba(202, 215, 210, 0.22);
+      --border-strong: rgba(222, 231, 228, 0.42);
+      --aura: rgba(146, 168, 169, 0.2);
+      --aura-2: rgba(204, 215, 210, 0.13);
     }
 
-    /* ── Reset ────────────────────────────────────── */
+    [data-book="relationship"] {
+      --bg: #0a0709;
+      --bg-soft: #151013;
+      --card-bg: #151013;
+      --card-bg-2: #1d1316;
+      --text-muted: #d4b3ad;
+      --text-faint: #836866;
+      --accent: #d9a49a;
+      --accent-soft: #f0c5bd;
+      --accent-deep: #8c5351;
+      --metal: #a77d76;
+      --border: rgba(220, 164, 154, 0.24);
+      --border-strong: rgba(229, 181, 174, 0.44);
+      --aura: rgba(154, 66, 70, 0.23);
+      --aura-2: rgba(217, 164, 154, 0.11);
+    }
+
+    [data-theme="light"] {
+      color-scheme: light;
+      --bg: #eeeee9;
+      --bg-deep: #d9ddd8;
+      --bg-soft: #f7f6f1;
+      --surface: rgba(255, 255, 250, 0.74);
+      --surface-strong: rgba(255, 255, 250, 0.94);
+      --surface-hover: rgba(24, 26, 24, 0.045);
+      --card-bg: #f7f6f1;
+      --card-bg-2: #edede6;
+      --paper-line: rgba(95, 78, 42, 0.055);
+      --text: #171714;
+      --text-muted: #5d574b;
+      --text-faint: #8a8375;
+      --accent: #8d6d31;
+      --accent-soft: #c59f47;
+      --accent-deep: #544116;
+      --metal: #756d5e;
+      --border: rgba(92, 77, 43, 0.24);
+      --border-strong: rgba(92, 77, 43, 0.42);
+      --aura: rgba(167, 126, 43, 0.2);
+      --aura-2: rgba(84, 95, 100, 0.12);
+      --shadow: 0 30px 88px rgba(63, 54, 35, 0.18), 0 10px 26px rgba(63, 54, 35, 0.12);
+      --button-text: #fbfaf5;
+      --spine: rgba(79, 62, 27, 0.14);
+    }
+
+    [data-theme="light"][data-book="audit"] {
+      --accent: #687371;
+      --accent-soft: #9aa5a2;
+      --accent-deep: #343c3b;
+      --aura: rgba(92, 110, 112, 0.16);
+      --aura-2: rgba(156, 169, 166, 0.16);
+      --border: rgba(72, 87, 86, 0.24);
+      --border-strong: rgba(72, 87, 86, 0.4);
+    }
+
+    [data-theme="light"][data-book="relationship"] {
+      --accent: #955f60;
+      --accent-soft: #c99088;
+      --accent-deep: #5c3034;
+      --aura: rgba(159, 83, 86, 0.16);
+      --aura-2: rgba(207, 144, 136, 0.14);
+      --border: rgba(128, 73, 74, 0.24);
+      --border-strong: rgba(128, 73, 74, 0.42);
+    }
+
+    /* Reset */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    /* ── Body ─────────────────────────────────────── */
     html {
       min-height: 100%;
       background: var(--bg);
+      scroll-behavior: smooth;
     }
 
     body {
       min-height: 100vh;
       min-height: 100svh;
+      overflow-x: hidden;
       background:
-        linear-gradient(115deg, rgba(155,118,37,0.08), transparent 36%),
-        linear-gradient(245deg, rgba(222,198,112,0.12), transparent 42%),
-        repeating-linear-gradient(90deg, rgba(106,82,25,0.024) 0 1px, transparent 1px 9px),
-        var(--bg);
+        radial-gradient(circle at 50% -18%, var(--aura) 0, transparent 34rem),
+        radial-gradient(circle at 14% 28%, var(--aura-2) 0, transparent 28rem),
+        radial-gradient(circle at 86% 76%, rgba(255, 255, 255, 0.045) 0, transparent 30rem),
+        linear-gradient(145deg, var(--bg-deep), var(--bg) 44%, var(--bg-soft));
       color: var(--text);
-      font-family: 'Inter', sans-serif;
+      font-family: var(--font-ui);
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: max(18px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(34px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
-      transition: background 0.5s ease, color 0.5s ease;
+      padding: max(18px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(28px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+      transition: background 0.8s var(--ease-ritual), color 0.6s ease;
     }
 
-    [data-theme="dark"] body {
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::before {
+      opacity: 0.42;
       background:
-        linear-gradient(115deg, rgba(217,185,77,0.10), transparent 38%),
-        linear-gradient(245deg, rgba(240,217,122,0.08), transparent 42%),
-        repeating-linear-gradient(90deg, rgba(217,185,77,0.018) 0 1px, transparent 1px 10px),
-        var(--bg);
+        linear-gradient(90deg, rgba(255, 255, 255, 0.026) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 72px 72px;
+      mask-image: radial-gradient(circle at 50% 38%, black, transparent 68%);
     }
 
-    /* ── Top Bar ──────────────────────────────────── */
+    body::after {
+      opacity: 0.24;
+      background-image:
+        radial-gradient(circle, rgba(244, 238, 223, 0.55) 0 1px, transparent 1.4px),
+        radial-gradient(circle, rgba(244, 238, 223, 0.32) 0 1px, transparent 1.3px);
+      background-position: 11% 18%, 78% 30%;
+      background-size: 19rem 22rem, 27rem 24rem;
+      animation: ambientDrift 18s ease-in-out infinite alternate;
+    }
+
+    button {
+      font: inherit;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button:focus-visible {
+      outline: 1px solid var(--accent-soft);
+      outline-offset: 4px;
+    }
+
+    .app-shell {
+      position: relative;
+      z-index: 1;
+      width: min(100%, 1120px);
+      min-height: calc(100svh - max(18px, env(safe-area-inset-top)) - max(28px, env(safe-area-inset-bottom)));
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+    }
+
+    .ambient-orbit {
+      position: fixed;
+      left: 50%;
+      top: 51%;
+      z-index: 0;
+      width: min(88vw, 680px);
+      aspect-ratio: 1;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      opacity: 0.28;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      transition: border-color 0.7s ease, opacity 0.7s ease;
+    }
+
+    .ambient-orbit::before,
+    .ambient-orbit::after {
+      content: "";
+      position: absolute;
+      inset: 9%;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+    }
+
+    .ambient-orbit::after {
+      inset: 20%;
+      border-style: dashed;
+      opacity: 0.62;
+      animation: slowTurn 44s linear infinite;
+    }
+
+    /* Top Bar */
     .top-bar {
+      position: relative;
+      z-index: 2;
       width: 100%;
-      max-width: 500px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 2px 0 clamp(22px, 3.4svh, 42px);
+    }
+
+    .brand-mark {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 42px;
+      color: var(--text-muted);
+      font-family: var(--font-serif);
+      font-size: 15px;
+      line-height: 1;
+    }
+
+    .brand-icon {
+      width: 22px;
+      height: 22px;
+      object-fit: contain;
+      opacity: 0.82;
+      filter: drop-shadow(0 0 16px color-mix(in srgb, var(--aura) 86%, transparent));
+      transition: filter 0.6s ease, opacity 0.6s ease;
+    }
+
+    .brand-mark::before,
+    .brand-mark::after {
+      content: "";
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border-strong));
+    }
+
+    .brand-mark::after {
+      background: linear-gradient(90deg, var(--border-strong), transparent);
+    }
+
+    .control-group {
       display: flex;
       justify-content: flex-end;
       align-items: center;
-      gap: 10px;
-      margin-bottom: clamp(22px, 5svh, 44px);
+      gap: 8px;
+      padding: 5px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: color-mix(in srgb, var(--surface) 88%, transparent);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 16px 44px rgba(0, 0, 0, 0.18);
+      backdrop-filter: blur(18px);
     }
 
     .top-btn {
-      background: var(--surface-soft);
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      padding: 7px 16px;
-      font-size: 12px;
-      font-family: 'Inter', sans-serif;
-      font-weight: 500;
-      letter-spacing: 0;
+      min-height: 34px;
+      border: 1px solid transparent;
+      border-radius: 6px;
+      padding: 7px 12px;
+      background: transparent;
       color: var(--text-muted);
       cursor: pointer;
-      box-shadow: 0 2px 8px rgba(38, 55, 33, 0.08);
-      transition: color 0.25s, border-color 0.25s, background 0.25s, transform 0.25s;
+      font-family: var(--font-ui);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0;
+      white-space: nowrap;
       user-select: none;
+      transition: color 0.25s ease, border-color 0.25s ease, background 0.25s ease, transform 0.25s ease;
     }
 
     .top-btn:hover {
-      color: var(--gold-deep);
-      border-color: var(--gold);
+      color: var(--text);
+      border-color: var(--border);
+      background: var(--surface-hover);
       transform: translateY(-1px);
     }
 
-    /* ── Main Container ───────────────────────────── */
+    .top-btn:active {
+      transform: translateY(0);
+    }
+
+    /* Main Container */
     .container {
+      position: relative;
+      z-index: 1;
       width: 100%;
-      max-width: 500px;
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
+      padding-bottom: clamp(16px, 3svh, 34px);
     }
 
-    /* ── Book Tabs ────────────────────────────────── */
     .book-tabs {
-      display: flex;
+      width: min(100%, 590px);
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 8px;
-      margin-bottom: clamp(22px, 5.5svh, 52px);
-      flex-wrap: wrap;
-      justify-content: center;
+      margin-bottom: clamp(22px, 4svh, 42px);
       padding: 6px;
       border: 1px solid var(--border);
-      border-radius: 999px;
-      background: var(--surface-soft);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.35), 0 12px 32px rgba(88, 66, 18, 0.12);
+      border-radius: 8px;
+      background: color-mix(in srgb, var(--surface) 90%, transparent);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07), 0 22px 70px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(20px);
     }
 
     .book-tab {
-      background: transparent;
+      position: relative;
+      min-height: 48px;
+      overflow: hidden;
       border: 1px solid transparent;
-      border-radius: 999px;
-      padding: 10px 18px;
-      font-size: 13px;
-      font-family: 'Libre Baskerville', Georgia, 'Times New Roman', serif;
-      font-weight: 400;
-      letter-spacing: 0;
+      border-radius: 6px;
+      padding: 9px 10px;
+      background: transparent;
       color: var(--text-muted);
       cursor: pointer;
-      transition: color 0.25s ease, border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+      font-family: var(--font-serif);
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: 0;
+      line-height: 1.2;
       user-select: none;
+      transition: color 0.35s ease, border-color 0.35s ease, background 0.35s ease, box-shadow 0.35s ease, transform 0.35s ease;
+    }
+
+    .book-tab::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, color-mix(in srgb, var(--accent) 24%, transparent) 0 3px, transparent 3px),
+        radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 66%);
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+
+    .book-tab span {
+      position: relative;
+      z-index: 1;
     }
 
     .book-tab.active {
-      background: linear-gradient(135deg, var(--gold-light), var(--pill-active) 62%, var(--gold-deep));
-      border-color: transparent;
-      color: var(--pill-text);
-      box-shadow: 0 6px 18px rgba(112, 80, 18, 0.26);
+      color: var(--text);
+      border-color: var(--border-strong);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.085), rgba(255, 255, 255, 0.025));
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.11), 0 10px 26px rgba(0, 0, 0, 0.24);
+    }
+
+    .book-tab.active::before,
+    .book-tab:hover::before {
+      opacity: 1;
     }
 
     .book-tab:hover:not(.active) {
-      background: var(--surface-high);
-      color: var(--gold-deep);
+      color: var(--text);
+      border-color: var(--border);
+      background: var(--surface-hover);
       transform: translateY(-1px);
     }
 
-    /* ── Book Title ───────────────────────────────── */
+    .title-block {
+      width: min(100%, 720px);
+      margin-bottom: clamp(20px, 4svh, 42px);
+      text-align: center;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      color: var(--accent);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      line-height: 1.4;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before,
+    .eyebrow::after {
+      content: "";
+      width: clamp(28px, 8vw, 70px);
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border-strong));
+    }
+
+    .eyebrow::after {
+      background: linear-gradient(90deg, var(--border-strong), transparent);
+    }
+
     .book-title {
-      font-family: 'Cinzel', 'Libre Baskerville', Georgia, serif;
-      font-size: clamp(28px, 8.2vw, 42px);
+      font-family: var(--font-display);
+      font-size: clamp(36px, 9vw, 74px);
       font-weight: 500;
       letter-spacing: 0;
-      text-transform: none;
       color: var(--text);
-      margin-bottom: clamp(20px, 4.4svh, 38px);
       text-align: center;
-      line-height: 1.08;
-      text-shadow: 0 1px 0 rgba(255,255,255,0.42);
+      line-height: 0.98;
+      text-wrap: balance;
+      text-shadow: 0 12px 48px color-mix(in srgb, var(--aura) 75%, transparent);
       opacity: 1;
-      transition: opacity 0.3s ease;
+      transform: translateY(0);
+      transition: opacity 0.38s ease, transform 0.38s var(--ease-ritual), color 0.55s ease;
+    }
+
+    .book-title.is-changing {
+      opacity: 0;
+      transform: translateY(8px);
     }
 
     :lang(zh-Hans) .book-title {
       font-family: 'Noto Serif SC', 'Songti SC', 'STSong', serif;
+      font-size: clamp(38px, 9.4vw, 70px);
       font-weight: 700;
+      line-height: 1.08;
     }
 
-    [data-theme="dark"] .book-title {
-      text-shadow: 0 1px 0 rgba(0,0,0,0.60);
+    .oracle-stage {
+      position: relative;
+      isolation: isolate;
+      width: min(100%, 720px);
+      display: grid;
+      place-items: center;
+      margin-bottom: clamp(24px, 4.2svh, 44px);
+      padding: clamp(20px, 4vw, 38px);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 30%),
+        radial-gradient(circle at 50% 12%, color-mix(in srgb, var(--aura) 72%, transparent), transparent 60%),
+        color-mix(in srgb, var(--surface) 92%, transparent);
+      box-shadow: 0 34px 120px rgba(0, 0, 0, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(22px);
+      transition: border-color 0.65s ease, background 0.65s ease, box-shadow 0.65s ease;
     }
 
-    /* ── Card Scene ───────────────────────────────── */
+    .oracle-stage::before,
+    .oracle-stage::after {
+      content: "";
+      position: absolute;
+      z-index: 0;
+      pointer-events: none;
+      border: 1px solid var(--border);
+      opacity: 0.72;
+    }
+
+    .oracle-stage::before {
+      inset: 13px;
+      border-radius: 6px;
+    }
+
+    .oracle-stage::after {
+      width: min(62%, 380px);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      border-color: color-mix(in srgb, var(--border) 62%, transparent);
+      box-shadow: 0 0 70px color-mix(in srgb, var(--aura) 70%, transparent);
+      animation: glowBreath 5.8s ease-in-out infinite;
+    }
+
+    .stage-symbol {
+      position: absolute;
+      top: clamp(14px, 3vw, 22px);
+      left: 50%;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-faint);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      line-height: 1;
+      transform: translateX(-50%);
+      user-select: none;
+    }
+
+    .stage-symbol::before,
+    .stage-symbol::after {
+      content: "";
+      width: 5px;
+      height: 5px;
+      border: 1px solid var(--accent);
+      border-radius: 50%;
+      opacity: 0.72;
+    }
+
+    /* Card Scene */
     .card-scene {
-      perspective: 1400px;
-      width: clamp(220px, min(78vw, 38svh), 300px);
-      aspect-ratio: 10 / 16;
-      margin-bottom: clamp(22px, 4.8svh, 44px);
+      position: relative;
+      z-index: 2;
+      width: clamp(248px, min(72vw, 44svh), 336px);
+      aspect-ratio: 10 / 14.6;
       cursor: pointer;
+      perspective: 1500px;
+      transform: translateY(0);
+      transition: transform 0.45s var(--ease-ritual);
+    }
+
+    .card-scene:hover {
+      transform: translateY(-4px);
     }
 
     .card {
+      position: relative;
       width: 100%;
       height: 100%;
-      position: relative;
       transform-style: preserve-3d;
-      transition: transform 0.9s cubic-bezier(0.45, 0.05, 0.15, 1.0);
+      transition: transform 1.05s cubic-bezier(0.2, 0.78, 0.18, 1);
     }
 
     .card.flipped {
@@ -230,52 +559,53 @@
       position: absolute;
       width: 100%;
       height: 100%;
-      backface-visibility: hidden;
-      -webkit-backface-visibility: hidden;
-      border-radius: 34px;
-      background:
-        linear-gradient(90deg, var(--spine) 0 13px, transparent 13px),
-        repeating-linear-gradient(0deg, transparent 0 13px, var(--paper-line) 13px 14px),
-        linear-gradient(135deg, rgba(255,255,255,0.48), transparent 28%),
-        var(--card-bg);
-      border: 1px solid var(--border);
-      box-shadow:
-        inset 10px 0 18px -16px var(--gold-deep),
-        inset 0 0 0 1px rgba(255,255,255,0.24),
-        var(--shadow);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: clamp(28px, 7svh, 44px) clamp(24px, 8vw, 36px);
-      transition: background 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
+      overflow: hidden;
+      padding: clamp(28px, 7svh, 48px) clamp(26px, 7vw, 42px);
+      border: 1px solid var(--border-strong);
+      border-radius: 8px;
+      background:
+        linear-gradient(90deg, var(--spine) 0 12px, transparent 12px),
+        repeating-linear-gradient(0deg, transparent 0 14px, var(--paper-line) 14px 15px),
+        radial-gradient(circle at 50% 7%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 42%),
+        linear-gradient(145deg, var(--card-bg-2), var(--card-bg) 54%, color-mix(in srgb, var(--card-bg) 84%, black));
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      box-shadow:
+        inset 14px 0 24px -22px var(--accent-deep),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        var(--shadow);
+      transition: background 0.65s ease, border-color 0.65s ease, box-shadow 0.65s ease;
     }
 
     .card-back {
       transform: rotateY(180deg);
     }
 
-    .card-face::before {
-      content: "";
-      position: absolute;
-      inset: 0 0 auto;
-      inset: 18px;
-      height: auto;
-      border-radius: 24px;
-      pointer-events: none;
-      background: none;
-      border: 1px solid var(--border);
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.16);
-      opacity: 0.88;
-    }
-
+    .card-face::before,
     .card-face::after {
       content: "";
       position: absolute;
-      inset: 27px;
-      border-radius: 18px;
       pointer-events: none;
-      border: 1px solid rgba(155,118,37,0.20);
+    }
+
+    .card-face::before {
+      inset: 17px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.045);
+    }
+
+    .card-face::after {
+      inset: 28px;
+      border: 1px solid color-mix(in srgb, var(--border) 76%, transparent);
+      border-radius: 4px;
+      background:
+        linear-gradient(90deg, transparent, color-mix(in srgb, var(--accent) 20%, transparent), transparent) top / 100% 1px no-repeat,
+        linear-gradient(90deg, transparent, color-mix(in srgb, var(--accent) 16%, transparent), transparent) bottom / 100% 1px no-repeat;
     }
 
     .card-face > * {
@@ -283,199 +613,404 @@
       z-index: 1;
     }
 
-    /* subtle hover lift */
     .card-scene:hover .card:not(.flipped) .card-front {
-      box-shadow: var(--shadow), 0 0 0 1px var(--border);
+      box-shadow:
+        inset 14px 0 24px -22px var(--accent-deep),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12),
+        var(--shadow),
+        0 0 52px color-mix(in srgb, var(--aura) 80%, transparent);
     }
 
-    /* ── Card Front ───────────────────────────────── */
     .ornament {
-      font-size: 30px;
-      color: var(--gold);
-      margin-bottom: 20px;
+      display: grid;
+      place-items: center;
+      width: 58px;
+      height: 58px;
+      margin-bottom: 18px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      color: var(--accent);
+      font-size: 28px;
       line-height: 1;
+      text-shadow: 0 0 24px color-mix(in srgb, var(--accent) 48%, transparent);
       user-select: none;
+      animation: glowBreath 6.4s ease-in-out infinite;
     }
 
     .divider {
-      width: 42px;
+      width: 54px;
       height: 1px;
-      background: var(--gold);
-      opacity: 0.45;
-      margin: 14px auto;
       flex-shrink: 0;
+      margin: 16px auto;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: 0.72;
     }
 
     .card-prompt {
-      font-family: 'Cormorant Garamond', 'Noto Serif SC', 'Songti SC', serif;
-      font-style: italic;
-      font-size: 17px;
-      line-height: 1.62;
+      max-width: 19ch;
       color: var(--text-muted);
+      font-family: var(--font-serif);
+      font-size: clamp(18px, 4.6vw, 22px);
+      font-style: italic;
+      font-weight: 500;
+      line-height: 1.52;
       text-align: center;
+      text-wrap: balance;
     }
 
     :lang(zh-Hans) .card-prompt {
+      max-width: 12em;
+      font-family: 'Noto Serif SC', 'Songti SC', 'STSong', serif;
       font-style: normal;
       font-weight: 400;
+      line-height: 1.7;
     }
 
     .card-hint {
-      margin-top: 20px;
-      font-size: 11px;
-      letter-spacing: 0;
-      text-transform: uppercase;
+      margin-top: 18px;
       color: var(--text-faint);
-    }
-
-    /* ── Card Back ────────────────────────────────── */
-    .answer-text {
-      font-family: 'Cormorant Garamond', 'Noto Serif SC', 'Songti SC', serif;
-      font-size: 24px;
+      font-size: 10px;
       font-weight: 600;
-      line-height: 1.42;
-      text-align: center;
-      color: var(--text);
-      transition: color 0.5s ease;
+      letter-spacing: 0.14em;
+      line-height: 1.4;
+      text-transform: uppercase;
     }
 
-    [data-theme="dark"] .answer-text {
-      color: var(--gold);
+    .answer-text {
+      max-width: 17ch;
+      color: var(--accent-soft);
+      font-family: var(--font-serif);
+      font-size: clamp(28px, 6.8vw, 38px);
+      font-weight: 600;
+      line-height: 1.18;
+      text-align: center;
+      text-wrap: balance;
+      text-shadow: 0 0 28px color-mix(in srgb, var(--aura) 80%, transparent);
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.52s var(--ease-ritual), transform 0.52s var(--ease-ritual), color 0.65s ease;
+    }
+
+    .answer-text.is-revealing {
+      opacity: 0;
+      transform: translateY(10px);
     }
 
     :lang(zh-Hans) .answer-text {
+      max-width: 10em;
       font-family: 'Noto Serif SC', 'Songti SC', 'STSong', serif;
-      font-size: 22px;
+      font-size: clamp(25px, 6vw, 34px);
       font-weight: 600;
-      line-height: 1.52;
+      line-height: 1.42;
     }
 
-    /* ── Ask Button ───────────────────────────────── */
     .ask-btn {
-      background: var(--btn-bg);
-      color: var(--btn-text);
-      border: 1px solid transparent;
-      border-radius: 999px;
-      padding: 15px 44px;
-      font-size: 12.5px;
-      font-family: 'Inter', sans-serif;
-      font-weight: 600;
-      letter-spacing: 0;
-      text-transform: uppercase;
+      position: relative;
+      isolation: isolate;
+      min-width: min(100%, 258px);
+      min-height: 54px;
+      overflow: hidden;
+      border: 1px solid color-mix(in srgb, var(--accent-soft) 55%, transparent);
+      border-radius: 8px;
+      padding: 16px 34px;
+      background:
+        linear-gradient(180deg, color-mix(in srgb, var(--accent-soft) 88%, white), var(--accent) 54%, var(--accent-deep));
+      color: var(--button-text);
       cursor: pointer;
-      box-shadow: 0 10px 26px rgba(112, 80, 18, 0.26);
-      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.5s ease, color 0.5s ease;
+      font-family: var(--font-ui);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      line-height: 1;
+      text-transform: uppercase;
+      box-shadow: 0 18px 46px color-mix(in srgb, var(--aura) 80%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.38);
       user-select: none;
+      transition: transform 0.32s var(--ease-ritual), box-shadow 0.32s ease, filter 0.32s ease;
+    }
+
+    .ask-btn::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: linear-gradient(110deg, transparent 0 28%, rgba(255, 255, 255, 0.38) 42%, transparent 56% 100%);
+      transform: translateX(-120%);
+      transition: transform 0.8s var(--ease-ritual);
     }
 
     .ask-btn:hover {
       transform: translateY(-3px);
-      box-shadow: 0 12px 30px rgba(75, 102, 33, 0.32);
+      filter: saturate(1.05);
+      box-shadow: 0 22px 58px color-mix(in srgb, var(--aura) 92%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.48);
     }
 
-    [data-theme="dark"] .ask-btn:hover {
-      box-shadow: 0 12px 30px rgba(0,0,0,0.36);
+    .ask-btn:hover::before {
+      transform: translateX(120%);
     }
 
-    .ask-btn:active {
-      transform: translateY(-1px);
+    .ask-btn:active,
+    .ask-btn.is-pressed {
+      transform: translateY(-1px) scale(0.985);
     }
 
-    /* ── Footer ───────────────────────────────────── */
     .footer {
-      margin-top: 64px;
-      font-size: 10.5px;
-      letter-spacing: 0;
-      text-transform: uppercase;
+      position: relative;
+      z-index: 1;
+      padding-top: clamp(18px, 3svh, 34px);
       color: var(--text-faint);
+      font-family: var(--font-ui);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      line-height: 1.4;
       text-align: center;
+      text-transform: uppercase;
     }
 
-    /* ── Responsive ───────────────────────────────── */
+    @keyframes ambientDrift {
+      from { transform: translate3d(-1.2%, -0.8%, 0); }
+      to { transform: translate3d(1.2%, 0.8%, 0); }
+    }
+
+    @keyframes glowBreath {
+      0%, 100% { opacity: 0.62; transform: scale(1); }
+      50% { opacity: 0.96; transform: scale(1.025); }
+    }
+
+    @keyframes slowTurn {
+      to { transform: rotate(360deg); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .app-shell {
+        width: 100%;
+      }
+
+      .top-bar {
+        align-items: flex-start;
+      }
+
+      .brand-mark {
+        font-size: 14px;
+      }
+
+      .brand-mark::before,
+      .brand-mark::after {
+        width: 16px;
+      }
+
+      .book-tabs {
+        width: min(100%, 480px);
+      }
+
+      .book-tab {
+        min-height: 44px;
+        font-size: 14px;
+      }
+
+      .oracle-stage {
+        padding: 28px 18px;
+      }
+
+      .oracle-stage::after {
+        width: 78%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding-inline: max(12px, env(safe-area-inset-left));
+      }
+
+      .top-bar {
+        gap: 10px;
+      }
+
+      .brand-mark {
+        min-height: 36px;
+        gap: 7px;
+        font-size: 13px;
+      }
+
+      .brand-mark::before,
+      .brand-mark::after {
+        display: none;
+      }
+
+      .control-group {
+        gap: 4px;
+        padding: 4px;
+      }
+
+      .top-btn {
+        min-height: 32px;
+        padding: 7px 9px;
+        font-size: 11px;
+      }
+
+      .book-tabs {
+        gap: 5px;
+        padding: 5px;
+      }
+
+      .book-tab {
+        min-height: 42px;
+        padding: 8px 5px;
+        font-size: 13px;
+      }
+
+      .eyebrow {
+        gap: 8px;
+        font-size: 9px;
+      }
+
+      .card-scene {
+        width: clamp(236px, min(80vw, 43svh), 300px);
+        aspect-ratio: 10 / 14.2;
+      }
+
+      .card-face {
+        padding-inline: 24px;
+      }
+
+      .ornament {
+        width: 50px;
+        height: 50px;
+        margin-bottom: 12px;
+        font-size: 24px;
+      }
+
+      .divider {
+        margin-block: 13px;
+      }
+
+      .ask-btn {
+        width: min(100%, 286px);
+      }
+    }
+
     @media (max-height: 760px) {
-      body { padding-bottom: max(22px, env(safe-area-inset-bottom)); }
-      .footer { margin-top: 40px; }
-    }
-
-    @media (max-width: 380px) {
-      .card-scene {
-        width: clamp(220px, min(84vw, 40svh), 280px);
-        aspect-ratio: 10 / 13.2;
+      .top-bar {
+        padding-bottom: 16px;
       }
-      .book-tabs { gap: 6px; padding: 6px; }
-      .book-tab { padding: 8px 12px; font-size: 12px; }
-      .ask-btn { width: min(100%, 260px); padding-inline: 24px; }
-    }
 
-    @media (max-height: 680px) {
-      .top-bar { margin-bottom: 16px; }
-      .book-tabs { margin-bottom: 16px; }
-      .book-title { margin-bottom: 14px; }
-      .card-scene {
-        width: clamp(190px, min(76vw, 36svh), 250px);
-        aspect-ratio: 10 / 12.8;
+      .book-tabs,
+      .title-block,
+      .oracle-stage {
+        margin-bottom: 16px;
       }
-      .card-hint { margin-top: 14px; }
-      .ornament { font-size: 24px; margin-bottom: 14px; }
-      .footer { display: none; }
-      .answer-text { font-size: 21px; line-height: 1.42; }
-      :lang(zh-Hans) .answer-text { font-size: 20px; line-height: 1.48; }
-      .card-prompt { font-size: 15px; line-height: 1.55; }
+
+      .oracle-stage {
+        padding-block: 20px;
+      }
+
+      .card-scene {
+        width: clamp(218px, min(70vw, 42svh), 292px);
+        aspect-ratio: 10 / 13.8;
+      }
+
+      .ornament {
+        width: 46px;
+        height: 46px;
+        margin-bottom: 10px;
+        font-size: 22px;
+      }
+
+      .card-prompt {
+        font-size: 17px;
+        line-height: 1.48;
+      }
+
+      .answer-text {
+        font-size: clamp(24px, 6svh, 32px);
+      }
+
+      .card-hint {
+        margin-top: 12px;
+      }
+
+      .footer {
+        display: none;
+      }
     }
   </style>
 </head>
 
 <body>
+  <div class="ambient-orbit" aria-hidden="true"></div>
 
-  <!-- Top Controls -->
-  <div class="top-bar">
-    <button class="top-btn" id="lang-toggle">中文</button>
-    <button class="top-btn" id="theme-toggle">☽ Night</button>
-  </div>
-
-  <!-- Main -->
-  <div class="container">
-
-    <!-- Book Selector -->
-    <div class="book-tabs">
-      <button class="book-tab active" data-book="classic"       id="tab-classic">Classic</button>
-      <button class="book-tab"        data-book="audit"         id="tab-audit">Audit Life</button>
-      <button class="book-tab"        data-book="relationship"  id="tab-relationship">Heart</button>
-    </div>
-
-    <!-- Title -->
-    <div class="book-title" id="book-title">The Book of Answers</div>
-
-    <!-- Card -->
-    <div class="card-scene" id="card-scene">
-      <div class="card" id="card">
-
-        <!-- Front Face -->
-        <div class="card-face card-front">
-          <div class="ornament" id="card-ornament">✦</div>
-          <div class="divider"></div>
-          <div class="card-prompt" id="card-prompt">Hold your question in mind, then reveal your answer.</div>
-          <div class="divider"></div>
-          <div class="card-hint" id="card-hint">tap to reveal</div>
-        </div>
-
-        <!-- Back Face -->
-        <div class="card-face card-back">
-          <div class="divider"></div>
-          <div class="answer-text" id="answer-text"></div>
-          <div class="divider"></div>
-        </div>
-
+  <div class="app-shell">
+    <!-- Top Controls -->
+    <header class="top-bar" aria-label="Settings">
+      <div class="brand-mark" aria-hidden="true">
+        <img class="brand-icon" src="./icon-192.png" alt="" />
+        <span>Oracle</span>
       </div>
-    </div>
+      <div class="control-group">
+        <button class="top-btn" type="button" id="lang-toggle">中文</button>
+        <button class="top-btn" type="button" id="theme-toggle">☀ Day</button>
+      </div>
+    </header>
 
-    <!-- Button -->
-    <button class="ask-btn" id="ask-btn">Ask the Book</button>
+    <!-- Main -->
+    <main class="container">
 
+      <!-- Book Selector -->
+      <nav class="book-tabs" aria-label="Book category">
+        <button class="book-tab active" type="button" data-book="classic" id="tab-classic" aria-pressed="true"><span>Classic</span></button>
+        <button class="book-tab" type="button" data-book="audit" id="tab-audit" aria-pressed="false"><span>Audit Life</span></button>
+        <button class="book-tab" type="button" data-book="relationship" id="tab-relationship" aria-pressed="false"><span>Heart</span></button>
+      </nav>
+
+      <!-- Title -->
+      <section class="title-block" aria-labelledby="book-title">
+        <div class="eyebrow" id="book-eyebrow">A quiet answer awaits</div>
+        <h1 class="book-title" id="book-title">The Book of Answers</h1>
+      </section>
+
+      <!-- Card -->
+      <section class="oracle-stage" aria-label="Answer reveal">
+        <div class="stage-symbol" aria-hidden="true">I - III - IX</div>
+        <div class="card-scene" id="card-scene" role="button" tabindex="0" aria-label="Reveal an answer">
+          <div class="card" id="card">
+
+            <!-- Front Face -->
+            <div class="card-face card-front">
+              <div class="ornament" id="card-ornament">✦</div>
+              <div class="divider"></div>
+              <div class="card-prompt" id="card-prompt">Hold your question in mind, then reveal your answer.</div>
+              <div class="divider"></div>
+              <div class="card-hint" id="card-hint">tap to reveal</div>
+            </div>
+
+            <!-- Back Face -->
+            <div class="card-face card-back">
+              <div class="divider"></div>
+              <div class="answer-text" id="answer-text" aria-live="polite"></div>
+              <div class="divider"></div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- Button -->
+      <button class="ask-btn" type="button" id="ask-btn">Ask the Book</button>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" id="footer">The Book of Answers</footer>
   </div>
-
-  <!-- Footer -->
-  <div class="footer" id="footer">The Book of Answers</div>
 
 
   <script>
@@ -2353,17 +2888,39 @@
 
   // ── State ──────────────────────────────────────────────────────────────────
   const state = {
-    theme:    "light",
+    theme:    "dark",
     lang:     "en",
     book:     "classic",
     flipped:  false,
     lastIdx:  -1
   };
 
+  const UI_TEXT = {
+    en: {
+      eyebrow: {
+        classic: "A quiet answer awaits",
+        audit: "A clearer signal awaits",
+        relationship: "A tender answer awaits"
+      },
+      revealLabel: "Reveal an answer",
+      resetLabel: "Close the answer"
+    },
+    zh: {
+      eyebrow: {
+        classic: "静候答案",
+        audit: "静候明晰",
+        relationship: "静候心声"
+      },
+      revealLabel: "揭晓答案",
+      resetLabel: "合上答案"
+    }
+  };
+
   // ── Elements ───────────────────────────────────────────────────────────────
   const $html        = document.documentElement;
   const $card        = document.getElementById("card");
   const $cardScene   = document.getElementById("card-scene");
+  const $bookEyebrow = document.getElementById("book-eyebrow");
   const $bookTitle   = document.getElementById("book-title");
   const $ornament    = document.getElementById("card-ornament");
   const $prompt      = document.getElementById("card-prompt");
@@ -2392,20 +2949,35 @@
     return list[idx];
   }
 
+  function setButtonLabel(button, label) {
+    const textNode = button.querySelector("span");
+    if (textNode) {
+      textNode.textContent = label;
+    } else {
+      button.textContent = label;
+    }
+  }
+
   // ── Render UI ──────────────────────────────────────────────────────────────
   function render(fadeTitle = false) {
     const d = currentData();
+    const ui = UI_TEXT[state.lang];
+
+    $html.setAttribute("data-theme", state.theme);
+    $html.setAttribute("data-book", state.book);
 
     // Title
     if (fadeTitle) {
-      $bookTitle.style.opacity = "0";
+      $bookTitle.classList.add("is-changing");
       setTimeout(() => {
         $bookTitle.textContent = d.name;
-        $bookTitle.style.opacity = "1";
-      }, 280);
+        $bookTitle.classList.remove("is-changing");
+      }, 240);
     } else {
       $bookTitle.textContent = d.name;
     }
+
+    $bookEyebrow.textContent = ui.eyebrow[state.book];
 
     // Card front
     $ornament.textContent = d.ornament;
@@ -2414,6 +2986,7 @@
 
     // Button
     $askBtn.textContent = state.flipped ? d.againBtn : d.askBtn;
+    $cardScene.setAttribute("aria-label", state.flipped ? ui.resetLabel : ui.revealLabel);
 
     // If answer is visible, re-render it in new language (same index)
     if (state.flipped && state.lastIdx >= 0) {
@@ -2421,9 +2994,14 @@
     }
 
     // Tabs
-    $tabClassic.textContent = state.lang === "en" ? "Classic"    : "经典";
-    $tabAudit.textContent   = state.lang === "en" ? "Audit Life" : "审计人生";
-    $tabRel.textContent     = state.lang === "en" ? "Heart"      : "心语";
+    setButtonLabel($tabClassic, state.lang === "en" ? "Classic"    : "经典");
+    setButtonLabel($tabAudit,   state.lang === "en" ? "Audit Life" : "审计人生");
+    setButtonLabel($tabRel,     state.lang === "en" ? "Heart"      : "心语");
+    $tabs.forEach(tab => {
+      const isActive = tab.dataset.book === state.book;
+      tab.classList.toggle("active", isActive);
+      tab.setAttribute("aria-pressed", String(isActive));
+    });
 
     // Toggles
     $langToggle.textContent  = state.lang   === "en"    ? "中文"    : "English";
@@ -2440,16 +3018,22 @@
 
   // ── Flip Logic ─────────────────────────────────────────────────────────────
   function flipToAnswer() {
+    $answer.classList.add("is-revealing");
     $answer.textContent = randomAnswer();
     state.flipped = true;
     $card.classList.add("flipped");
     $askBtn.textContent = currentData().againBtn;
+    render(false);
+    window.setTimeout(() => {
+      $answer.classList.remove("is-revealing");
+    }, 360);
   }
 
-  function flipToFront() {
+  function flipToFront(shouldRender = true) {
     state.flipped = false;
     $card.classList.remove("flipped");
     $askBtn.textContent = currentData().askBtn;
+    if (shouldRender) render(false);
   }
 
   function handleAsk() {
@@ -2460,15 +3044,24 @@
   $cardScene.addEventListener("click", handleAsk);
   $askBtn.addEventListener("click", (e) => { e.stopPropagation(); handleAsk(); });
 
+  $cardScene.addEventListener("keydown", (e) => {
+    if (e.key !== "Enter" && e.key !== " ") return;
+    e.preventDefault();
+    handleAsk();
+  });
+
+  $askBtn.addEventListener("pointerdown", () => $askBtn.classList.add("is-pressed"));
+  ["pointerup", "pointercancel", "pointerleave"].forEach(eventName => {
+    $askBtn.addEventListener(eventName, () => $askBtn.classList.remove("is-pressed"));
+  });
+
   $tabs.forEach(tab => {
     tab.addEventListener("click", () => {
       const book = tab.dataset.book;
       if (book === state.book) return;
       state.book    = book;
       state.lastIdx = -1;
-      if (state.flipped) flipToFront();
-      $tabs.forEach(t => t.classList.remove("active"));
-      tab.classList.add("active");
+      if (state.flipped) flipToFront(false);
       render(true);
     });
   });
@@ -2480,7 +3073,6 @@
 
   $themeToggle.addEventListener("click", () => {
     state.theme = state.theme === "light" ? "dark" : "light";
-    $html.setAttribute("data-theme", state.theme);
     render(false);
   });
 
