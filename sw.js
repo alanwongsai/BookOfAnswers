@@ -1,7 +1,7 @@
 // Book of Answers — Service Worker
 // Caches everything for offline use
 
-const CACHE = 'book-of-answers-v5';
+const CACHE = 'book-of-answers-v6';
 const ASSETS = [
   './',
   './index.html',
