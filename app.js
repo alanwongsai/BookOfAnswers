@@ -1,8 +1,12 @@
 // ── Data ───────────────────────────────────────────────────────────────────
-const BOOKS = window.BOOKS;
-if (!BOOKS) {
-  throw new Error("Answer data failed to load.");
-}
+const BOOKS = window.BOOKS || {};
+const REQUIRED_BOOKS = ["classic", "audit", "relationship"];
+const REQUIRED_LANGS = ["en", "zh"];
+const THEME_COLORS = {
+  dark: "#09080b",
+  light: "#f5f0e8"
+};
+const dataValidation = validateBooksData(BOOKS);
 
 // ── State ──────────────────────────────────────────────────────────────────
 const state = {
@@ -20,7 +24,6 @@ const UI_TEXT = {
       audit: "A clearer signal awaits",
       relationship: "A tender answer awaits"
     },
-    brand: "Answer Portal",
     helper: "Let the question settle. When the surface feels still, ask once.",
     revealLabel: "Reveal an answer",
     resetLabel: "Close the answer"
@@ -31,7 +34,6 @@ const UI_TEXT = {
       audit: "静候明晰",
       relationship: "静候心声"
     },
-    brand: "答案之门",
     helper: "让问题先安静下来。等表面平稳时，只问一次。",
     revealLabel: "揭晓答案",
     resetLabel: "合上答案"
@@ -42,7 +44,6 @@ const UI_TEXT = {
 const $html        = document.documentElement;
 const $card        = document.getElementById("card");
 const $cardScene   = document.getElementById("card-scene");
-const $brandLabel  = document.getElementById("brand-label");
 const $helperCopy  = document.getElementById("helper-copy");
 const $bookEyebrow = document.getElementById("book-eyebrow");
 const $bookTitle   = document.getElementById("book-title");
@@ -55,19 +56,62 @@ const $answerCount = document.getElementById("answer-count");
 const $askBtn      = document.getElementById("ask-btn");
 const $langToggle  = document.getElementById("lang-toggle");
 const $themeToggle = document.getElementById("theme-toggle");
-const $footer      = document.getElementById("footer");
 const $tabs        = document.querySelectorAll(".cat-tab");
 const $tabClassic  = document.getElementById("tab-classic");
 const $tabAudit    = document.getElementById("tab-audit");
 const $tabRel      = document.getElementById("tab-relationship");
+const $themeColorMeta = document.querySelector('meta[name="theme-color"]');
+
+function validateBooksData(data) {
+  const errors = [];
+
+  if (!data || typeof data !== "object") {
+    return { ok: false, errors: ["BOOKS data object is missing."] };
+  }
+
+  REQUIRED_BOOKS.forEach((book) => {
+    const bookData = data[book];
+    if (!bookData || typeof bookData !== "object") {
+      errors.push(`Missing book: ${book}`);
+      return;
+    }
+
+    REQUIRED_LANGS.forEach((lang) => {
+      const langData = bookData[lang];
+      if (!langData || typeof langData !== "object") {
+        errors.push(`Missing language '${lang}' in book '${book}'`);
+        return;
+      }
+
+      if (!Array.isArray(langData.answers) || langData.answers.length === 0) {
+        errors.push(`Invalid answers in book '${book}' language '${lang}'`);
+      }
+    });
+
+    const enAnswers = bookData.en && bookData.en.answers;
+    const zhAnswers = bookData.zh && bookData.zh.answers;
+    if (Array.isArray(enAnswers) && Array.isArray(zhAnswers) && enAnswers.length !== zhAnswers.length) {
+      errors.push(`Answer count mismatch in '${book}': en=${enAnswers.length}, zh=${zhAnswers.length}`);
+    }
+  });
+
+  return { ok: errors.length === 0, errors };
+}
 
 // ── Helpers ────────────────────────────────────────────────────────────────
 function currentData() {
-  return BOOKS[state.book][state.lang];
+  const bookData = BOOKS[state.book];
+  if (!bookData) return null;
+  return bookData[state.lang] || null;
 }
 
 function randomAnswer() {
-  const list = currentData().answers;
+  const data = currentData();
+  if (!data || !Array.isArray(data.answers) || data.answers.length === 0) {
+    return state.lang === "en" ? "Answer data unavailable." : "答案数据不可用。";
+  }
+
+  const list = data.answers;
   let idx;
   do { idx = Math.floor(Math.random() * list.length); }
   while (idx === state.lastIdx && list.length > 1);
@@ -82,11 +126,16 @@ function setButtonLabel(button, label) {
 }
 
 function updateAnswerMeta() {
-  const total = currentData().answers.length;
+  const data = currentData();
+  const total = data && Array.isArray(data.answers) ? data.answers.length : 0;
   if ($answerCount) {
-    $answerCount.textContent = state.lang === "en"
-      ? `${state.lastIdx + 1} of ${total}`
-      : `${state.lastIdx + 1} / ${total}`;
+    if (state.lastIdx >= 0 && total > 0) {
+      $answerCount.textContent = state.lang === "en"
+        ? `${state.lastIdx + 1} of ${total}`
+        : `${state.lastIdx + 1} / ${total}`;
+    } else {
+      $answerCount.textContent = "";
+    }
   }
   if ($answerLabel) {
     $answerLabel.textContent = state.lang === "en" ? "Answer" : "答语";
@@ -97,9 +146,13 @@ function updateAnswerMeta() {
 function render(fadeTitle = false) {
   const d  = currentData();
   const ui = UI_TEXT[state.lang];
+  if (!d) return;
 
   $html.setAttribute("data-theme", state.theme);
   $html.setAttribute("data-book",  state.book);
+  if ($themeColorMeta) {
+    $themeColorMeta.setAttribute("content", THEME_COLORS[state.theme]);
+  }
 
   // Title (with optional fade transition)
   if (fadeTitle) {
@@ -113,7 +166,6 @@ function render(fadeTitle = false) {
   }
 
   $bookEyebrow.textContent = ui.eyebrow[state.book];
-  if ($brandLabel) $brandLabel.textContent = ui.brand;
   if ($helperCopy) $helperCopy.textContent = ui.helper;
 
   // Card front
@@ -146,9 +198,6 @@ function render(fadeTitle = false) {
   $themeToggle.textContent = state.theme === "light"
     ? (state.lang === "en" ? "☽ Night" : "☽ 夜间")
     : (state.lang === "en" ? "☀ Day"   : "☀ 日间");
-
-  // Legacy footer (hidden)
-  if ($footer) $footer.textContent = d.name;
 
   // lang attribute for CSS :lang() selectors
   $html.lang = state.lang === "en" ? "en" : "zh-Hans";
@@ -187,6 +236,7 @@ function flipToFront(shouldRender = true) {
 }
 
 function handleAsk() {
+  if (!dataValidation.ok) return;
   state.flipped ? flipToFront() : flipToAnswer();
 }
 
@@ -227,7 +277,25 @@ $themeToggle.addEventListener("click", () => {
 });
 
 // ── Init ───────────────────────────────────────────────────────────────────
-render(false);
+if (!dataValidation.ok) {
+  $askBtn.disabled = true;
+  $cardScene.setAttribute("aria-disabled", "true");
+  $cardScene.removeAttribute("tabindex");
+  $answer.textContent = state.lang === "en"
+    ? "Data error. Please verify book files."
+    : "数据错误，请检查语料文件。";
+  if ($helperCopy) {
+    $helperCopy.textContent = state.lang === "en"
+      ? "Cannot start: answer files are incomplete."
+      : "无法启动：语料文件不完整。";
+  }
+  if ($themeColorMeta) {
+    $themeColorMeta.setAttribute("content", THEME_COLORS.dark);
+  }
+  console.error("Book data validation failed:", dataValidation.errors);
+} else {
+  render(false);
+}
 
 // ── PWA: Register Service Worker ───────────────────────────────────────────
 if ('serviceWorker' in navigator) {
