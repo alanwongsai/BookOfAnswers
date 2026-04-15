@@ -33,7 +33,7 @@ Three books are included, each with 300 answers in both **English and Simplified
 ## Deploy in 3 Steps
 
 1. **Fork or clone** this repo
-2. Push `index.html`, `answers.js`, and `README.md` to your `main` branch
+2. Push `index.html`, `styles.css`, `app.js`, `data/`, and `README.md` to your `main` branch
 3. Go to **Settings → Pages → Source: main / root** → Save
 
 Your app will be live at `https://yourusername.github.io/repo-name` within a minute.
@@ -44,13 +44,18 @@ Your app will be live at `https://yourusername.github.io/repo-name` within a min
 
 ```
 /
-├── index.html     ← app shell, styles, and interaction logic
-├── answers.js     ← answer database for all books and languages
-├── manifest.json  ← PWA metadata
-├── sw.js          ← offline cache service worker
-├── icon-192.png   ← app icon
-├── icon-512.png   ← app icon
-└── README.md      ← this file
+├── index.html              ← app shell and script/style loading
+├── styles.css              ← visual design and responsive layout
+├── app.js                  ← interaction logic
+├── data/
+│   ├── classic.js          ← Classic answer database
+│   ├── audit.js            ← Audit Life answer database
+│   └── relationship.js     ← Heart answer database
+├── manifest.json           ← PWA metadata
+├── sw.js                   ← offline cache service worker
+├── icon-192.png            ← app icon
+├── icon-512.png            ← app icon
+└── README.md               ← this file
 ```
 
 No `node_modules`. No `package.json`. No build process. Just open the file and it works.
@@ -59,7 +64,7 @@ No `node_modules`. No `package.json`. No build process. Just open the file and i
 
 ## Customising Answers
 
-All answers live in `answers.js` in the `window.BOOKS` object. Each book has an `en` and `zh` section, each with an `answers` array. Add, remove, or edit lines freely — just keep the EN and ZH arrays the same length so the language switch stays in sync.
+Answers live in `data/classic.js`, `data/audit.js`, and `data/relationship.js`. Each book file registers one `window.BOOKS` entry with an `en` and `zh` section, each with an `answers` array. Add, remove, or edit lines freely — just keep the EN and ZH arrays in each book the same length so the language switch stays in sync.
 
 ```js
 answers: [

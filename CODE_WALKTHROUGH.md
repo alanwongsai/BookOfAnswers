@@ -1,9 +1,11 @@
 # Book of Answers 代码学习笔记
 
-这份文档用来解释当前项目的主要代码结构，方便以后复习。项目核心由两个文件组成：
+这份文档用来解释当前项目的主要代码结构，方便以后复习。项目核心由几类文件组成：
 
-- `index.html`：页面结构、CSS 样式、JavaScript 交互逻辑。
-- `answers.js`：答案数据，包括不同分类和中英文内容。
+- `index.html`：页面结构，以及 CSS / JavaScript 文件加载顺序。
+- `styles.css`：页面样式、主题、动画和响应式布局。
+- `app.js`：JavaScript 交互逻辑。
+- `data/*.js`：三本书的答案数据，每本书包含英文和中文内容。
 
 ## 1. 页面入口
 
@@ -305,18 +307,21 @@ $askBtn.textContent = state.flipped ? d.againBtn : d.askBtn;
 ## 13. 加载答案数据
 
 ```html
-<script src="./answers.js"></script>
+<script src="./data/classic.js"></script>
+<script src="./data/audit.js"></script>
+<script src="./data/relationship.js"></script>
+<script src="./app.js"></script>
 ```
 
-这行先加载 `answers.js`。
+前三行先加载三本书的数据文件，最后一行再加载 `app.js`。这个顺序很重要，因为 `app.js` 启动时会读取 `window.BOOKS`。
 
-后面的 JavaScript 会读取：
+`app.js` 会读取：
 
 ```js
 const BOOKS = window.BOOKS;
 ```
 
-如果 `answers.js` 没有加载成功，就会报错：
+如果数据文件没有加载成功，就会报错：
 
 ```js
 if (!BOOKS) {
@@ -361,7 +366,7 @@ const UI_TEXT = {
 - 辅助提示文案。
 - 无障碍标签。
 
-答案数据在 `answers.js` 的 `BOOKS` 里面。
+答案数据在 `data/*.js` 注册的 `BOOKS` 里面。
 
 ## 16. 获取 HTML 元素
 
@@ -625,30 +630,21 @@ Service Worker 常用于离线缓存，让网页更像 App。
 
 `.catch(() => {})` 表示如果注册失败，就静默忽略，不让页面报明显错误。
 
-## 26. answers.js 数据结构
+## 26. data/*.js 数据结构
 
-`answers.js` 的核心是：
+三本书分别放在 `data/classic.js`、`data/audit.js` 和 `data/relationship.js`。每个文件只注册一本书：
 
 ```js
-window.BOOKS = {
-  "classic": {
-    "en": { ... },
-    "zh": { ... }
-  },
-  "audit": {
-    "en": { ... },
-    "zh": { ... }
-  },
-  "relationship": {
-    "en": { ... },
-    "zh": { ... }
-  }
+window.BOOKS = window.BOOKS || {};
+window.BOOKS.classic = {
+  "en": { ... },
+  "zh": { ... }
 };
 ```
 
 `window.BOOKS` 表示把 `BOOKS` 放到浏览器全局对象 `window` 上。
 
-这样 `index.html` 里的脚本就可以通过下面这行拿到数据：
+这样 `app.js` 就可以通过下面这行拿到数据：
 
 ```js
 const BOOKS = window.BOOKS;
@@ -689,8 +685,8 @@ const BOOKS = window.BOOKS;
 
 1. 浏览器打开 `index.html`。
 2. CSS 画出背景、卡片、按钮和动画。
-3. 页面加载 `answers.js`，得到 `window.BOOKS`。
-4. JavaScript 初始化 `state`，默认是深色、英文、classic。
+3. 页面加载 `data/classic.js`、`data/audit.js` 和 `data/relationship.js`，得到 `window.BOOKS`。
+4. 页面加载 `app.js`，初始化 `state`，默认是深色、英文、classic。
 5. 调用 `render(false)`，把默认内容显示到页面。
 6. 用户点击卡片或按钮。
 7. `handleAsk()` 判断当前是否已经翻开。
@@ -703,7 +699,7 @@ const BOOKS = window.BOOKS;
 
 这个项目的核心关系是：
 
-- `answers.js` 提供数据。
+- `data/*.js` 提供数据。
 - `state` 记录当前页面状态。
 - `render()` 把状态显示到页面。
 - 事件监听器响应用户点击和键盘操作。
