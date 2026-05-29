@@ -1,77 +1,89 @@
-# 📖 The Book of Answers
+# 📖 The Book of Answers · 答案之书
 
-A minimal, elegant web app inspired by *The Book of Answers* — ask a question, flip the card, receive your answer.
+Ask a question, tap the page, receive one quiet line. A minimal, dependency-free
+oracle in the spirit of *The Book of Answers* — no AI, no algorithm, just a flip
+and a sentence that might be exactly what you needed to hear.
 
-**Live demo:** `https://yourusername.github.io/book-of-answers`
+**Live:** https://alanwongsai.github.io/BookOfAnswers/
 
----
-
-## What It Does
-
-You hold a question in your mind, tap the card, and get a random answer — just like the classic book. No AI, no algorithms trying to be clever. Just a flip, and a line that might be exactly what you needed to hear.
-
-Three books are included, each with 300 answers in both **English and Simplified Chinese**:
-
-| Book | Theme | Vibe |
-|------|-------|-------|
-| **Classic** | Life & decisions | Oracular, timeless |
-| **Audit Life** | Work & audit struggles | Honest, painfully relatable |
-| **Heart** | Relationships & feelings | Honest, sometimes brutal |
+Design language: **Paper & Ink** — warm paper, ink-set serif type, a single drop
+of vermilion (朱砂), and a corner seal that stamps in when your answer arrives.
+Day is paper; night is a lamp-lit page.
 
 ---
 
-## Features
+## 介绍 · What it is
 
-- 🃏 **3D card flip animation** — smooth, satisfying reveal
-- 🌙 **Day / Night mode** — warm cream by day, deep gold-on-dark at night
-- 🇨🇳 **EN ↔ 中文** — switch languages anytime, even mid-answer
-- 📱 **Mobile friendly** — works on any screen size
-- ⚡ **Zero dependencies** — pure HTML, CSS, JavaScript. No build step, no framework.
+Three "books", each with answers in **English and 简体中文**. The whole point is
+that whatever you are turning over in your mind, the line you draw will feel like
+it means something.
 
----
+| Book | 书 | Theme | Voice | Lines |
+|------|-----|-------|-------|-------|
+| **Classic** | 经典 | Life & decisions | Oracular, calm | 300 |
+| **Audit Life** | 审计人生 | Work & audit dilemmas | Dry, wise, real | 200 |
+| **Heart** | 心语 | Relationships & feelings | Honest, tender | 200 |
 
-## Deploy in 3 Steps
-
-1. **Fork or clone** this repo
-2. Push `index.html`, `styles.css`, `app.js`, `data/`, and `README.md` to your `main` branch
-3. Go to **Settings → Pages → Source: main / root** → Save
-
-Your app will be live at `https://yourusername.github.io/repo-name` within a minute.
+Each book also retints the paper and seal, and brings its own ornament (✦ / § / ♡).
 
 ---
 
-## Project Structure
+## 文件架构 · Project structure
 
 ```
-/
-├── index.html              ← app shell and script/style loading
-├── styles.css              ← visual design and responsive layout
-├── app.js                  ← interaction logic
-├── data/
-│   ├── classic.js          ← Classic answer database
-│   ├── audit.js            ← Audit Life answer database
-│   └── relationship.js     ← Heart answer database
-├── manifest.json           ← PWA metadata
-├── sw.js                   ← offline cache service worker
-├── icon-192.png            ← app icon
-├── icon-512.png            ← app icon
-└── README.md               ← this file
+index.html          App shell — loads fonts, styles, the data files, then app.js
+styles.css          All visual design (the "Paper & Ink" language). One stylesheet.
+app.js              Interaction logic + data validation. Plain JS, no build.
+data/
+  classic.js        window.BOOKS.classic       — { en, zh }, each an answers[] array
+  audit.js          window.BOOKS.audit
+  relationship.js   window.BOOKS.relationship
+manifest.json       PWA metadata
+sw.js               Service worker (offline cache)
+icon-192/512.png    App icons
+CLAUDE.md           Guide for AI assistants / contributors (design rules, gotchas)
 ```
 
-No `node_modules`. No `package.json`. No build process. Just open the file and it works.
+Data and logic are separated: each `data/*.js` registers one entry on
+`window.BOOKS`. `app.js` validates it and drives the UI from a small `state`
+(`theme`, `lang`, `book`, `flipped`). No framework, no `package.json`, no build
+step — open `index.html` and it works.
 
 ---
 
-## Customising Answers
+## 使用 · Run it locally
 
-Answers live in `data/classic.js`, `data/audit.js`, and `data/relationship.js`. Each book file registers one `window.BOOKS` entry with an `en` and `zh` section, each with an `answers` array. Add, remove, or edit lines freely — just keep the EN and ZH arrays in each book the same length so the language switch stays in sync.
+It is a static site, so any static server works:
 
-```js
-answers: [
-  "Your new answer here",
-  // ...
-]
+```bash
+python3 -m http.server 8766
+# then open http://localhost:8766
 ```
+
+In the app: tap the page (or **Ask the Book**) to reveal an answer; tap again to
+ask anew. Switch books with the tabs, and use the top-right controls to toggle
+**EN ↔ 中文** and **day ↔ night** — even mid-answer.
+
+---
+
+## Customising answers
+
+Answers live in `data/classic.js`, `data/audit.js`, and `data/relationship.js`.
+Each book has an `en` and a `zh` section, each with an `answers` array.
+
+> ⚠️ Keep the `en` and `zh` arrays in a book **the same length** — the language
+> toggle maps by index, and the app disables itself if they mismatch. Edit both
+> when you add or remove a line.
+
+After changing any asset (`styles.css`, `app.js`, `data/*`), bump `CACHE` in
+`sw.js` so returning visitors get the new version instead of the offline cache.
+
+---
+
+## Deploy (GitHub Pages)
+
+Push to `main`, then **Settings → Pages → Source: main / root**. The site is live
+at `https://<username>.github.io/<repo>/` within a minute.
 
 ---
 
