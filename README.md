@@ -6,9 +6,10 @@ and a sentence that might be exactly what you needed to hear.
 
 **Live:** https://alanwongsai.github.io/BookOfAnswers/
 
-Design language: **Paper & Ink** — warm paper, ink-set serif type, a single drop
-of vermilion (朱砂), and a corner seal that stamps in when your answer arrives.
-Day is paper; night is a lamp-lit page.
+Design language: **Fate Thread Glass** — a restrained dark "thread of fate"
+register adapted from The Norns: near-black ground, silver linework, scarce gold
+accents, serif inscription type, and a translucent glass answer card. Dark is the
+default; Day is a cool silver-glass variant, not parchment.
 
 ---
 
@@ -24,7 +25,8 @@ it means something.
 | **Audit Life** | 审计人生 | Work & audit dilemmas | Dry, wise, real | 200 |
 | **Heart** | 心语 | Relationships & feelings | Honest, tender | 200 |
 
-Each book also retints the paper and seal, and brings its own ornament (✦ / § / ♡).
+Each book keeps its own ornament (✦ / § / ♡), while the visual system stays in
+the same gold/silver fate-thread register.
 
 ---
 
@@ -32,7 +34,7 @@ Each book also retints the paper and seal, and brings its own ornament (✦ / §
 
 ```
 index.html          App shell — loads fonts, styles, the data files, then app.js
-styles.css          All visual design (the "Paper & Ink" language). One stylesheet.
+styles.css          All visual design (the "Fate Thread Glass" language). One stylesheet.
 app.js              Interaction logic + data validation. Plain JS, no build.
 data/
   classic.js        window.BOOKS.classic       — { en, zh }, each an answers[] array

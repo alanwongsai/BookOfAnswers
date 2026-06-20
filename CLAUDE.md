@@ -34,32 +34,35 @@ global `window.BOOKS`. `app.js` reads `window.BOOKS`, validates it
 
 There is **no framework and no build**. Edit files directly; reload the browser.
 
-## Design language — "Paper & Ink"
+## Design language — "Fate Thread Glass"
 
-The visual motif is a warm sheet of paper read by hand, with a single drop of
-vermilion (朱砂). Keep changes within this language:
+The visual motif is a quiet oracle surface in The Norns' dark "thread of fate"
+register: near-black ground, low-opacity silver linework, scarce gold accents,
+serif inscription type, and a translucent glass answer card. Keep changes within
+this language:
 
-- **Ground / page**: warm paper (`--paper`, `--card`). Day = bright paper,
-  Night (`[data-theme="dark"]`) = a lamp-lit dark page. Day is the default.
-- **Type**: ink-set serif for everything expressive — title, prompt, answer
-  (`--font-serif` = Cormorant Garamond + Noto Serif SC). A plain system sans
-  (`--font-ui`) only for tiny labels (eyebrow, hint, tabs, counts). Chinese
-  uses `--font-zh` (Noto Serif SC) via `:lang(zh-Hans)` rules.
-- **Accent**: vermilion `--seal` is the *only* color. Used sparingly — the ✦
-  ornament, the active-tab underline, the "Answer" label, and the corner seal
-  that stamps in on reveal. Do not introduce a second accent color.
-- **Each book** retints the paper and seal slightly (`[data-book="..."]`):
-  classic = cream, audit = cooler working-paper grey, relationship = warm blush.
-- **Motion is quiet.** A soft page-lift, a cross-fade reveal, and the seal
-  "stamp" keyframe. No glow, no glass, no parallax. Respect
-  `prefers-reduced-motion` (already handled at the bottom of `styles.css`).
+- **Ground / glass**: dark is the default (`data-theme="dark"`). The page uses
+  `--bg`, `--bg2`, and a fixed `.cosmos` fate-thread background. The card is a
+  blurred glass panel (`--panel`) with fine silver/gold borders. Day mode is a
+  cool silver-glass variant, not warm paper or parchment.
+- **Type**: expressive text — title, prompt, answer, helper copy — uses the
+  inscription serif stack (`Iowan Old Style` / Palatino / Georgia / Songti SC).
+  Labels, counts, tabs, and utility controls use mono/sans per the tokens.
+- **Accent**: gold `--thread` is scarce. Use it for the active state, answer
+  label, fine linework, and the reveal sigil only. Silver `--thread2` supports
+  dividers and background lines. Do not bring back vermilion or parchment tones.
+- **Each book** may adjust the gold slightly but must not receive independent
+  semantic colors; the The Norns Urð / Verðandi / Skuld colors are reserved for
+  time semantics and are not book-category colors here.
+- **Motion is quiet.** Preserve the soft lift, cross-fade reveal, and sigil
+  arrival. Avoid looping animation and respect `prefers-reduced-motion` (already
+  handled at the bottom of `styles.css`).
 
 All colors/fonts/radii live as CSS custom properties at the top of
 `styles.css`. Change tokens there rather than hardcoding values in components.
 
-> History: an earlier "liquid glass / oracle" direction was replaced by Paper &
-> Ink in the v1.5 round. If you find references to glass, gold, or a cosmos
-> background anywhere, they are stale.
+> History: the old v1.5 Paper & Ink direction was replaced by Fate Thread Glass.
+> References to warm paper, vermilion seals, or parchment defaults are stale.
 
 ## Editing answers
 

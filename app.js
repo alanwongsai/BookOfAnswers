@@ -3,14 +3,14 @@ const BOOKS = window.BOOKS || {};
 const REQUIRED_BOOKS = ["classic", "audit", "relationship"];
 const REQUIRED_LANGS = ["en", "zh"];
 const THEME_COLORS = {
-  dark: "#1d1813",
-  light: "#f3ebdc"
+  dark: "#0c0e13",
+  light: "#edf0f5"
 };
 const dataValidation = validateBooksData(BOOKS);
 
 // ── State ──────────────────────────────────────────────────────────────────
 const state = {
-  theme:    "light",
+  theme:    "dark",
   lang:     "en",
   book:     "classic",
   flipped:  false,
